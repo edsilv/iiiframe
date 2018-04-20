@@ -1,0 +1,70 @@
+{
+  "id": "https://edsilv.github.io/iiiframe/collection/transform/index.json",
+  "type": "Manifest",
+  "items": [
+    {
+      "id": "https://edsilv.github.io/iiiframe/collection/transform/index.json/canvas/0",
+      "type": "Canvas",
+      "items": [
+        {
+          "id": "https://edsilv.github.io/iiiframe/collection/transform/index.json/canvas/0/annotationpage/0",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://edsilv.github.io/iiiframe/collection/transform/index.json/canvas/0/annotation/0",
+              "type": "Annotation",
+              "motivation": "position",
+              "body": {
+                "id": "https://edsilv.github.io/iiiframe/collection/transform/_transform/assets/position.json",
+                "label": {
+                  "@none": [
+                    "_transform"
+                  ]
+                }
+              },
+              "target": "https://edsilv.github.io/iiiframe/collection/transform/index.json/canvas/0"
+            },
+            {
+              "id": "https://edsilv.github.io/iiiframe/collection/transform/index.json/canvas/0/annotation/1",
+              "type": "Annotation",
+              "motivation": "rotation",
+              "body": {
+                "id": "https://edsilv.github.io/iiiframe/collection/transform/_transform/assets/rotation.json",
+                "label": {
+                  "@none": [
+                    "_transform"
+                  ]
+                }
+              },
+              "target": "https://edsilv.github.io/iiiframe/collection/transform/index.json/canvas/0"
+            },
+            {
+              "id": "https://edsilv.github.io/iiiframe/collection/transform/index.json/canvas/0/annotation/2",
+              "type": "Annotation",
+              "motivation": "scale",
+              "body": {
+                "id": "https://edsilv.github.io/iiiframe/collection/transform/_transform/assets/scale.json",
+                "label": {
+                  "@none": [
+                    "_transform"
+                  ]
+                }
+              },
+              "target": "https://edsilv.github.io/iiiframe/collection/transform/index.json/canvas/0"
+            }
+          ]
+        }
+      ],
+      "label": {
+        "@none": [
+          "_transform"
+        ]
+      }
+    }
+  ],
+  "label": {
+    "@none": [
+      "transform"
+    ]
+  }
+}

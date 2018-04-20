@@ -1,0 +1,20 @@
+{
+  "id": "https://edsilv.github.io/iiiframe/collection/index.json",
+  "type": "Collection",
+  "items": [
+    {
+      "id": "https://edsilv.github.io/iiiframe/collection/transform/index.json",
+      "type": "Manifest",
+      "label": {
+        "@none": [
+          "transform"
+        ]
+      }
+    }
+  ],
+  "label": {
+    "@none": [
+      "collection"
+    ]
+  }
+}

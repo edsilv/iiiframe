@@ -1,0 +1,24 @@
+{
+  "name": "iiiframe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "biiif": "0.1.14",
+    "biiif-cli": "0.0.16"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/biiif collection -u https://edsilv.github.io/iiiframe/collection"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edsilv/iiiframe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edsilv/iiiframe/issues"
+  },
+  "homepage": "https://github.com/edsilv/iiiframe#readme"
+}
