@@ -18,7 +18,7 @@
 
 	<script>
 
-		const manifesturl = "/collection/transform/index.json";
+		const manifesturl = "https://edsilv.github.io/iiiframe/collection/transform/index.json";
 		let scene;
 
 		function parseManifest(manifest) {
@@ -78,6 +78,7 @@
 			
 			switch (format.toLowerCase()) {
 				case "image/jpeg" :
+
 					// geometry component
 					// https://github.com/aframevr/aframe/blob/bbc2f0325cdd3c4bd95a69ce4ce9705b0e6a041d/src/extras/primitives/primitives/a-image.js
 					const geometry = document.createAttribute("geometry");
