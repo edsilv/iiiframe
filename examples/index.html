@@ -21,32 +21,32 @@
 		const manifesturl = "https://edsilv.github.io/iiiframe/collection/transform/index.json";
 		let scene;
 
-		function parseManifest(manifest) {
+		async function parseManifest(manifest) {
 
 			const sequences = manifest.getSequences();
 			const sequence = sequences[0];
 			const canvases = sequence.getCanvases();
-
-			canvases.forEach(canvas => {
+			
+			await Promise.all(canvases.map(async canvas => {
 				parseCanvas(canvas);
-			});
+			}));
+
 		}
 
-		function parseCanvas(canvas) {
-
-			const entity = document.createElement('a-entity');
-			scene.appendChild(entity);
+		async function parseCanvas(canvas) {
 
 			const annos = canvas.getContent();
 
 			// get the painting annotation (jpg, gltf, obj, pdf...)
 			const painting = getPaintingAnnotation(annos);
-			parsePaintingFormat(painting, entity);
+			let entity = parsePaintingAnnotation(painting);
 
 			// parse remaining annotations (scale, rotate, position...)
-			annos.forEach(anno => {
-				parseAnnotation(anno, entity, painting);
-			});
+			await Promise.all(annos.map(async anno => {
+				parseAnnotation(anno, entity);
+			}));
+			
+			scene.appendChild(entity);
 		}
 
 		function getPaintingAnnotation(annos) {
@@ -59,51 +59,103 @@
 			}
 		}
 
-		function parseAnnotation(anno, entity, painting) {
+		async function parseAnnotation(anno, entity) {
 			
 			const motivation = anno.getMotivation().value;
 
+			if (motivation.toLowerCase() === "painting") {
+				return;
+			}
+
+			const body = anno.getBody()[0];
+
+			let json = await get(body.id);
+			json = JSON.parse(json);
+
 			switch (motivation) {
 				case "scale" :
-					// add scale component to painting annotation 
-					break;
 
+					if (entity.nodeName === "A-IMAGE") {
+						// add width and height
+						const width = document.createAttribute("width");
+						width.value = json.x;
+						entity.setAttributeNode(width);
+
+						const height = document.createAttribute("height");
+						height.value = json.y;
+						entity.setAttributeNode(height);
+					} else {
+						// add scale component
+						const scale = document.createAttribute("scale");
+						scale.value = `${json.x} ${json.y} ${json.z}`;
+						entity.setAttributeNode(scale);
+					}
+					
+					break;
+				case "rotation" :
+					// add rotation component
+					break;
+				case "position" :
+					// add position component
+					break;
 			}
 			
 		}
 
-		function parsePaintingFormat(anno, entity) {
+		function parsePaintingAnnotation(anno) {
 			const body = anno.getBody()[0];
 			const format = body.getFormat().value;
+			let entity;
 			
 			switch (format.toLowerCase()) {
 				case "image/jpeg" :
+					entity = document.createElement('a-image');
 
 					// geometry component
 					// https://github.com/aframevr/aframe/blob/bbc2f0325cdd3c4bd95a69ce4ce9705b0e6a041d/src/extras/primitives/primitives/a-image.js
-					const geometry = document.createAttribute("geometry");
-					geometry.value = "primitive: plane;"
-					entity.setAttributeNode(geometry);
+					// const geometry = document.createAttribute("geometry");
+					// geometry.value = "primitive: plane;"
+					// entity.setAttributeNode(geometry);
 
 					// src component
 					const src = document.createAttribute("src");
 					src.value = body.id;
 					entity.setAttributeNode(src);
 
-					// material component
-					const material = document.createAttribute("material");
-					material.value = "color: '#FFF'; shader: 'flat'; side: 'double'; transparent: true";
-					entity.setAttributeNode(material);
-
+					// // material component
+					// const material = document.createAttribute("material");
+					// material.value = "color: #FFF; shader: flat; side: double; transparent: true";
+					// entity.setAttributeNode(material);
 					break;
 				case "model/gltf+json" :
-					// const gltfmodel = document.createAttribute("gltf-model");
-					// gltf.value = "";
-					// entity.setAttributeNode(gltfmodel);
+					entity = document.createElement('a-entity');
+					const gltfmodel = document.createAttribute("gltf-model");
+					gltf.value = body.id;
+					entity.setAttributeNode(gltfmodel);
 					break;
 			}
 			
+			return entity;
 		}
+
+		function get(url) {
+            return new Promise(function (resolve, reject) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', url);
+                xhr.addEventListener('load', (progressEvent) => {
+                    if (xhr.status == 200) {
+                        resolve(progressEvent.target.response);
+                    }
+                    else {
+                        reject(Error(xhr.statusText));
+                    }
+                });
+                xhr.onerror = function () {
+                    reject(Error("Network Error"));
+                };
+                xhr.send();
+            });
+        }
 
 		document.addEventListener("DOMContentLoaded", function (event) {
 			
@@ -111,9 +163,10 @@
 
 			manifesto.loadManifest(manifesturl).then((data) => {
 				const manifest = manifesto.create(data);
-				parseManifest(manifest);		
+				parseManifest(manifest);
 			});
 		});
+
 	</script>
 
 </body>
