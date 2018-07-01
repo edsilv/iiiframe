@@ -1,0 +1,120 @@
+<html>
+
+<head>
+	<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+	<script src="https://unpkg.com/manifesto.js/dist/client/manifesto.bundle.js"></script>
+	<script src="https://unpkg.com/proxy-observe@0.0.21/browser/proxy-observe.min.js"></script>
+</head>
+
+<body>
+
+	<div>
+		<input type="checkbox" name="orthographic" id="orthographic">
+	</div>
+
+	<a-scene>
+		<!-- <a-entity position="-1 0.5 -3" rotation="0 45 0" scale=""></a-entity> -->
+	</a-scene>
+
+	<script>
+
+		const manifesturl = "/collection/transform/index.json";
+		let scene;
+
+		function parseManifest(manifest) {
+
+			const sequences = manifest.getSequences();
+			const sequence = sequences[0];
+			const canvases = sequence.getCanvases();
+
+			canvases.forEach(canvas => {
+				parseCanvas(canvas);
+			});
+		}
+
+		function parseCanvas(canvas) {
+
+			const entity = document.createElement('a-entity');
+			scene.appendChild(entity);
+
+			const annos = canvas.getContent();
+
+			// get the painting annotation (jpg, gltf, obj, pdf...)
+			const painting = getPaintingAnnotation(annos);
+			parsePaintingFormat(painting, entity);
+
+			// parse remaining annotations (scale, rotate, position...)
+			annos.forEach(anno => {
+				parseAnnotation(anno, entity, painting);
+			});
+		}
+
+		function getPaintingAnnotation(annos) {
+			for (let i = 0; i < annos.length; i++) {
+				const anno = annos[i];
+				const motivation = anno.getMotivation().value;
+				if (motivation.toLowerCase() === "painting") {
+					return anno;
+				}
+			}
+		}
+
+		function parseAnnotation(anno, entity, painting) {
+			
+			const motivation = anno.getMotivation().value;
+
+			switch (motivation) {
+				case "scale" :
+					// add scale component to painting annotation 
+					break;
+
+			}
+			
+		}
+
+		function parsePaintingFormat(anno, entity) {
+			const body = anno.getBody()[0];
+			const format = body.getFormat().value;
+			
+			switch (format.toLowerCase()) {
+				case "image/jpeg" :
+					// geometry component
+					// https://github.com/aframevr/aframe/blob/bbc2f0325cdd3c4bd95a69ce4ce9705b0e6a041d/src/extras/primitives/primitives/a-image.js
+					const geometry = document.createAttribute("geometry");
+					geometry.value = "primitive: plane;"
+					entity.setAttributeNode(geometry);
+
+					// src component
+					const src = document.createAttribute("src");
+					src.value = body.id;
+					entity.setAttributeNode(src);
+
+					// material component
+					const material = document.createAttribute("material");
+					material.value = "color: '#FFF'; shader: 'flat'; side: 'double'; transparent: true";
+					entity.setAttributeNode(material);
+
+					break;
+				case "model/gltf+json" :
+					// const gltfmodel = document.createAttribute("gltf-model");
+					// gltf.value = "";
+					// entity.setAttributeNode(gltfmodel);
+					break;
+			}
+			
+		}
+
+		document.addEventListener("DOMContentLoaded", function (event) {
+			
+			scene = document.getElementsByTagName('a-scene')[0];
+
+			manifesto.loadManifest(manifesturl).then((data) => {
+				const manifest = manifesto.create(data);
+				parseManifest(manifest);		
+			});
+		});
+	</script>
+
+</body>
+
+</html>

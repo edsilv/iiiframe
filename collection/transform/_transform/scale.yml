@@ -1,2 +1,3 @@
 motivation: scale
 value: "assets/scale.json"
+format: application/json

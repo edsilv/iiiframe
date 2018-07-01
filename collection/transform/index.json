@@ -13,9 +13,11 @@
             {
               "id": "https://edsilv.github.io/iiiframe/collection/transform/index.json/canvas/0/annotation/0",
               "type": "Annotation",
-              "motivation": "position",
+              "motivation": "painting",
               "body": {
-                "id": "https://edsilv.github.io/iiiframe/collection/transform/_transform/assets/position.json",
+                "id": "https://edsilv.github.io/iiiframe/collection/transform/_transform/assets/abyssinian.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
                 "label": {
                   "@none": [
                     "_transform"
@@ -27,9 +29,10 @@
             {
               "id": "https://edsilv.github.io/iiiframe/collection/transform/index.json/canvas/0/annotation/1",
               "type": "Annotation",
-              "motivation": "rotation",
+              "motivation": "position",
               "body": {
-                "id": "https://edsilv.github.io/iiiframe/collection/transform/_transform/assets/rotation.json",
+                "id": "https://edsilv.github.io/iiiframe/collection/transform/_transform/assets/position.json",
+                "format": "application/json",
                 "label": {
                   "@none": [
                     "_transform"
@@ -41,9 +44,25 @@
             {
               "id": "https://edsilv.github.io/iiiframe/collection/transform/index.json/canvas/0/annotation/2",
               "type": "Annotation",
+              "motivation": "rotation",
+              "body": {
+                "id": "https://edsilv.github.io/iiiframe/collection/transform/_transform/assets/rotation.json",
+                "format": "application/json",
+                "label": {
+                  "@none": [
+                    "_transform"
+                  ]
+                }
+              },
+              "target": "https://edsilv.github.io/iiiframe/collection/transform/index.json/canvas/0"
+            },
+            {
+              "id": "https://edsilv.github.io/iiiframe/collection/transform/index.json/canvas/0/annotation/3",
+              "type": "Annotation",
               "motivation": "scale",
               "body": {
                 "id": "https://edsilv.github.io/iiiframe/collection/transform/_transform/assets/scale.json",
+                "format": "application/json",
                 "label": {
                   "@none": [
                     "_transform"

@@ -1,2 +1,3 @@
 motivation: position
 value: "assets/position.json"
+format: application/json
