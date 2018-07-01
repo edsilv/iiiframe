@@ -12,9 +12,7 @@
 		<input type="checkbox" name="orthographic" id="orthographic">
 	</div>
 
-	<a-scene>
-		<a-image src="https://edsilv.github.io/iiiframe/collection/transform/_transform/assets/abyssinian.jpg" width="100" height="100"></a-image>
-	</a-scene>
+	<a-scene></a-scene>
 
 	<script>
 
@@ -78,11 +76,11 @@
 					if (entity.nodeName === "A-IMAGE") {
 						// add width and height
 						const width = document.createAttribute("width");
-						width.value = json.x;
+						width.value = json.x / 100;
 						entity.setAttributeNode(width);
 
 						const height = document.createAttribute("height");
-						height.value = json.y;
+						height.value = json.y / 100;
 						entity.setAttributeNode(height);
 					} else {
 						// add scale component
@@ -96,7 +94,9 @@
 					// add rotation component
 					break;
 				case "position" :
-					// add position component
+					const position = document.createAttribute("position");
+					position.value = `${json.x} ${json.y} ${json.z}`;
+					entity.setAttributeNode(position);
 					break;
 			}
 			
