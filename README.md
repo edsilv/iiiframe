@@ -9,6 +9,6 @@ Reads a IIIF manifest and for each canvas creates an A-Frame `Entity`. For each 
 ### TODO: 
 
 - ~~single centered image~~
-- `display` (right-left, left-to-right, top-to-bottom, bottom-to-top, continuous) [custom component](https://aframe.io/docs/0.8.0/introduction/writing-a-component.html)
 - checkbox toggle perspective and orthographic camera
+- `display` (right-left, left-to-right, top-to-bottom, bottom-to-top, continuous) [custom component](https://aframe.io/docs/0.8.0/introduction/writing-a-component.html)
 - `playback` (duration, continuous) (AV) [custom component](https://aframe.io/docs/0.8.0/introduction/writing-a-component.html)
