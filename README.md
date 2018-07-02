@@ -6,10 +6,9 @@ example: https://edsilv.github.io/iiiframe/examples/
 
 Reads a IIIF manifest and for each canvas creates an A-Frame `Entity`. For each annotation on that manifest, (conforming to the IIIF-ECS extension motivations), creates an A-Frame `Component` with the corresponding [type](https://github.com/aframevr/aframe/tree/master/docs/components).
 
-TODO: 
+## TODO: 
 
-- ~~A single centered image~~
-- 3 images arranged horizontally
-- 3 images arranged vertically
+- ~~single centered image~~
+- `display` (right-left, left-to-right, top-to-bottom, bottom-to-top, continuous) [custom component](https://aframe.io/docs/0.8.0/introduction/writing-a-component.html)
 - checkbox toggle perspective and orthographic camera
-- Create `display` (right-left, left-to-right, continuous) and `playback` (AV) [custom components](https://aframe.io/docs/0.8.0/introduction/writing-a-component.html)
+- `playback` (AV) [custom component](https://aframe.io/docs/0.8.0/introduction/writing-a-component.html)
