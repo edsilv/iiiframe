@@ -12,4 +12,4 @@ TODO:
 - 3 images arranged horizontally
 - 3 images arranged vertically
 - checkbox toggle perspective and orthographic camera
-- Create `display` and `playback` [custom components](https://aframe.io/docs/0.8.0/introduction/writing-a-component.html)
+- Create `display` (right-left, left-to-right, continuous) and `playback` (AV) [custom components](https://aframe.io/docs/0.8.0/introduction/writing-a-component.html)
