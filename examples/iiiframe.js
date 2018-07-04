@@ -121,7 +121,7 @@ function parsePaintingAnnotation(anno) {
 }
 
 function get(url) {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
         xhr.addEventListener('load', (progressEvent) => {
@@ -132,7 +132,7 @@ function get(url) {
                 reject(Error(xhr.statusText));
             }
         });
-        xhr.onerror = function () {
+        xhr.onerror = () => {
             reject(Error("Network Error"));
         };
         xhr.send();

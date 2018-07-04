@@ -3,11 +3,11 @@
   "type": "Collection",
   "items": [
     {
-      "id": "https://edsilv.github.io/iiiframe/collection/transform/index.json",
-      "type": "Manifest",
+      "id": "https://edsilv.github.io/iiiframe/collection/images/index.json",
+      "type": "Collection",
       "label": {
         "@none": [
-          "transform"
+          "images"
         ]
       }
     }

@@ -4,20 +4,50 @@
 	<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
 	<script src="https://unpkg.com/manifesto.js/dist/client/manifesto.bundle.js"></script>
 	<script src="iiiframe.js"></script>
-	<!-- <script src="https://unpkg.com/proxy-observe@0.0.21/browser/proxy-observe.min.js"></script> -->
+	<script src="https://unpkg.com/proxy-observe@0.0.21/browser/proxy-observe.min.js"></script>
+	<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	body {
+		margin: 0;
+		padding: 0;
+	}
+	
+	#example {
+		display: flex;
+	}
+	
+	#scene {
+		flex: 80%;
+	}
+
+	#options {
+		flex: 20%;
+		background: #2dc1ef;
+	}
+	</style>
 </head>
 
 <body>
 
-	<!-- <div>
-		<input type="checkbox" name="orthographic" id="orthographic">
-	</div> -->
+	<div id="example">
 
-	<a-scene></a-scene>
+		<div id="scene">
+			<a-scene embedded></a-scene>
+		</div>
 
+		<div id="options">
+			<!-- <input type="checkbox" name="orthographic" id="orthographic"> -->
+		</div>
+
+	</div>
+	
 	<script>
-		document.addEventListener("DOMContentLoaded", function (event) {    
-			iiiframe(document.getElementsByTagName('a-scene')[0], "https://edsilv.github.io/iiiframe/collection/transform/index.json");
+		document.addEventListener("DOMContentLoaded", function (event) { 
+			var scene = document.getElementsByTagName('a-scene')[0];  
+			iiiframe(scene, "https://edsilv.github.io/iiiframe/collection/images/single-image/index.json");
 		});
 	</script>
 
