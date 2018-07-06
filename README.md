@@ -4,7 +4,7 @@ An implementation of https://github.com/edsilv/iiif-ecs-proposal (work in progre
 
 example: https://edsilv.github.io/iiiframe/examples/
 
-Reads a IIIF manifest and for each canvas creates an A-Frame `Entity`. For each annotation on that manifest, (conforming to the IIIF-ECS extension motivations), creates an A-Frame `Component` with the corresponding [type](https://github.com/aframevr/aframe/tree/master/docs/components).
+Reads a IIIF manifest and for each canvas creates an A-Frame `Entity`. For each annotation on that canvas, (conforming to the IIIF-ECS extension motivations), creates an A-Frame `Component` with the corresponding [type](https://github.com/aframevr/aframe/tree/master/docs/components).
 
 ### TODO: 
 

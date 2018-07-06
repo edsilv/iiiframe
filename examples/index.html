@@ -50,12 +50,12 @@
 	</div>
 	
 	<script>
-		document.addEventListener("DOMContentLoaded", function (event) {
+		document.addEventListener("DOMContentLoaded", function (evt) {
 
 			var explorer = document.querySelector('iiif-explorer');
 			explorer.manifest = "https://edsilv.github.io/iiiframe/collection/";
 
-			explorer.addEventListener('onSelectManifest', function(evt) {
+			explorer.addEventListener('onSelectManifest', function (evt) {
                 var manifest = evt.detail.id;
 				var scene = document.querySelector('#scene');
 				scene.innerHTML = '';
