@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/biiif collection -u https://edsilv.github.io/iiiframe/collection",
-    "start": "http-server -c-1 ./"
+    "devbuild": "./node_modules/.bin/biiif collection -u http://localhost:8888/collection",
+    "start": "http-server -c-1 -p 8888 ./"
   },
   "repository": {
     "type": "git",

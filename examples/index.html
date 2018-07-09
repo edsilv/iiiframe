@@ -2,6 +2,7 @@
 
 <head>
 	<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+	<script src="https://unpkg.com/aframe-orbit-controls@1.0.0/dist/aframe-orbit-controls.min.js"></script>
 	<script src="https://unpkg.com/manifesto.js/dist/client/manifesto.bundle.js"></script>
 	<script src="https://unpkg.com/iiif-explorer/dist/iiifexplorer.js"></script>
 	<script src="iiiframe.js"></script>
@@ -53,7 +54,8 @@
 		document.addEventListener("DOMContentLoaded", function (evt) {
 
 			var explorer = document.querySelector('iiif-explorer');
-			explorer.manifest = "https://edsilv.github.io/iiiframe/collection/";
+			//explorer.manifest = "https://edsilv.github.io/iiiframe/collection/";
+			explorer.manifest = "http://localhost:8888/collection/index.json";
 
 			explorer.addEventListener('onSelectManifest', function (evt) {
                 var manifest = evt.detail.id;
@@ -63,8 +65,17 @@
 				var ascene = document.createElement('a-scene');
 				ascene.setAttribute('embedded', true);
 				scene.appendChild(ascene);
+
+				ascene.addEventListener('loaded', function(evt) {
+					
+					var object = document.querySelector('a-entity[gltf-model]');
+					
+					var camera = document.querySelector('a-entity[camera]');
+					camera.setAttribute('orbit-controls', 'target: 0 0 0; minDistance: 0; maxDistance: 180; initialPosition: 0 -1 -1; screenSpacePanning: false; dampingFactor: 0.1');
+					
+					iiiframe(ascene, manifest);
+				});
 				
-				iiiframe(ascene, manifest);
             });
 
 		});

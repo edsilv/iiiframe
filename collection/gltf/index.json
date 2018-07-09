@@ -1,0 +1,26 @@
+{
+  "id": "http://localhost:8888/collection/gltf/index.json",
+  "type": "Collection",
+  "items": [
+    {
+      "id": "http://localhost:8888/collection/gltf/fisherman/index.json",
+      "type": "Manifest",
+      "label": {
+        "@none": [
+          "Fisherman"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "http://localhost:8888/collection/gltf/fisherman/thumb.jpg",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "label": {
+    "@none": [
+      "gltf"
+    ]
+  }
+}

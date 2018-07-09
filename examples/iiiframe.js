@@ -112,7 +112,7 @@ function parsePaintingAnnotation(anno) {
         case "model/gltf+json" :
             entity = document.createElement('a-entity');
             const gltfmodel = document.createAttribute("gltf-model");
-            gltf.value = body.id;
+            gltfmodel.value = body.id;
             entity.setAttributeNode(gltfmodel);
             break;
     }
