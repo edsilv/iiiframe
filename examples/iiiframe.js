@@ -1,16 +1,20 @@
-let manifesturl, scene;
+let manifesturl;
 const scalefactor = 100;
+const ecsProposalEnabled = false;
 
 async function parseManifest(manifest) {
 
     const sequences = manifest.getSequences();
     const sequence = sequences[0];
     const canvases = sequence.getCanvases();
+    const entities = [];
     
     await Promise.all(canvases.map(async canvas => {
-        parseCanvas(canvas);
+        const entity = await parseCanvas(canvas);
+        entities.push(entity);
     }));
 
+    return entities;
 }
 
 async function parseCanvas(canvas) {
@@ -21,12 +25,14 @@ async function parseCanvas(canvas) {
     const painting = getPaintingAnnotation(annos);
     let entity = parsePaintingAnnotation(painting);
 
-    // parse remaining annotations (scale, rotate, position...)
-    await Promise.all(annos.map(async anno => {
-        parseAnnotation(anno, entity);
-    }));
-    
-    scene.appendChild(entity);
+    if (ecsProposalEnabled) {
+        // parse remaining annotations (scale, rotate, position...)
+        await Promise.all(annos.map(async anno => {
+            parseAnnotation(anno, entity);
+        }));
+    }
+
+    return entity;
 }
 
 function getPaintingAnnotation(annos) {
@@ -139,13 +145,13 @@ function get(url) {
     });
 }
 
-function iiiframe(s, m) {
+async function iiiframe(m) {
 
-    scene = s;
     manifesturl = m;
 
-    manifesto.loadManifest(manifesturl).then((data) => {
-        const manifest = manifesto.create(data);
-        parseManifest(manifest);
-    });
+    const data = await manifesto.loadManifest(manifesturl);
+    const manifest = manifesto.create(data);
+    const entities = await parseManifest(manifest);
+
+    return entities;
 }

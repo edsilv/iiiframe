@@ -16,6 +16,21 @@
           "type": "Image"
         }
       ]
+    },
+    {
+      "id": "http://localhost:8888/collection/gltf/gourd/index.json",
+      "type": "Manifest",
+      "label": {
+        "@none": [
+          "Gourd"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "http://localhost:8888/collection/gltf/gourd/thumb.jpg",
+          "type": "Image"
+        }
+      ]
     }
   ],
   "label": {

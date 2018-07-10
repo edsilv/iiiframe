@@ -67,13 +67,43 @@
 				scene.appendChild(ascene);
 
 				ascene.addEventListener('loaded', function(evt) {
-					
-					var object = document.querySelector('a-entity[gltf-model]');
-					
-					var camera = document.querySelector('a-entity[camera]');
-					camera.setAttribute('orbit-controls', 'target: 0 0 0; minDistance: 0; maxDistance: 180; initialPosition: 0 -1 -1; screenSpacePanning: false; dampingFactor: 0.1');
-					
-					iiiframe(ascene, manifest);
+
+					// iiiframe takes a manifest url and returns a set of a-frame entities
+					// you then add them to your scene and position the camera accordingly
+
+					iiiframe(manifest).then((entities) => {
+
+						entities.forEach((entity) => {
+
+							ascene.appendChild(entity);
+
+							entity.addEventListener('model-loaded', (obj) => {
+							
+								const object3D = obj.target.object3D;
+								const bufferGeometry = object3D.children[0].children[0].geometry;
+								bufferGeometry.computeBoundingBox();
+								const sizeX = bufferGeometry.boundingBox.max.x - bufferGeometry.boundingBox.min.x;
+								const sizeY = bufferGeometry.boundingBox.max.y - bufferGeometry.boundingBox.min.y;
+								const sizeZ = bufferGeometry.boundingBox.max.z - bufferGeometry.boundingBox.min.z;
+								const diagonalSize = Math.sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ);
+								const scale = 1.0 / diagonalSize;
+								const midX = (bufferGeometry.boundingBox.min.x + bufferGeometry.boundingBox.max.x) / 2;
+								const midY = (bufferGeometry.boundingBox.min.y + bufferGeometry.boundingBox.max.y) / 2;
+								const midZ = (bufferGeometry.boundingBox.min.z + bufferGeometry.boundingBox.max.z) / 2;
+
+								object3D.scale.multiplyScalar(scale);
+								object3D.position.x = -midX * scale;
+								object3D.position.y = -midY * scale;
+								object3D.position.z = -midZ * scale;
+
+							});
+						});
+
+						const camera = document.querySelector('a-entity[camera]');
+						camera.setAttribute('orbit-controls', 'target: 0 0 0; minDistance: 0; maxDistance: 180; initialPosition: 0 0 -1; screenSpacePanning: false; dampingFactor: 0.1');
+
+					});
+
 				});
 				
             });
