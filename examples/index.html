@@ -1,95 +1,84 @@
 <html>
 
 <head>
+	<link rel="stylesheet" href="styles.css">
 	<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
 	<script src="https://unpkg.com/aframe-orbit-controls@1.0.0/dist/aframe-orbit-controls.min.js"></script>
 	<script src="https://unpkg.com/manifesto.js/dist/client/manifesto.bundle.js"></script>
 	<script src="https://unpkg.com/iiif-explorer/dist/iiifexplorer.js"></script>
 	<script src="iiiframe.js"></script>
 	<script src="https://unpkg.com/proxy-observe@0.0.21/browser/proxy-observe.min.js"></script>
-	<style>
-	* {
-		box-sizing: border-box;
-	}
-
-	body {
-		margin: 0;
-		padding: 0;
-		font-family: Arial, Helvetica, sans-serif;
-	}
-	
-	#example {
-		display: flex;
-		height: 100%;
-	}
-	
-	#scene {
-		flex: 70%;
-	}
-
-	#options {
-		flex: 30%;
-		background: #2dc1ef;
-		padding: 1rem;
-	}
-	</style>
 </head>
 
 <body>
 
 	<div id="example">
 
-		<div id="scene">
-			
+		<div id="options">
+
+			<h3>Choose a manifest</h3>
+
+			<iiif-explorer></iiif-explorer>
+
+			<h3>Options</h3>
+
+			<label><input type="checkbox" id="autoRotateEnabled" />Auto Rotate</label>
+			<!-- <label><input type="checkbox" id="orbitControlsEnabled" />Orbit</label> -->
+
 		</div>
 
-		<div id="options">
-			<h3>Choose a manifest</h3>
-			<iiif-explorer></iiif-explorer>
+		<div id="scene">
+			
 		</div>
 
 	</div>
 	
 	<script>
 
-		function scaleAndPositionObject(obj) {
-			const bufferGeometry = obj.children[0].children[0].geometry;
-			bufferGeometry.computeBoundingBox();
-			const sizeX = bufferGeometry.boundingBox.max.x - bufferGeometry.boundingBox.min.x;
-			const sizeY = bufferGeometry.boundingBox.max.y - bufferGeometry.boundingBox.min.y;
-			const sizeZ = bufferGeometry.boundingBox.max.z - bufferGeometry.boundingBox.min.z;
-			const diagonalSize = Math.sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ);
-			const scale = 1.0 / diagonalSize;
-			const midX = (bufferGeometry.boundingBox.min.x + bufferGeometry.boundingBox.max.x) / 2;
-			const midY = (bufferGeometry.boundingBox.min.y + bufferGeometry.boundingBox.max.y) / 2;
-			const midZ = (bufferGeometry.boundingBox.min.z + bufferGeometry.boundingBox.max.z) / 2;
+		let ascene, camera;
 
-			obj.scale.multiplyScalar(scale);
-			obj.position.x = -midX * scale;
-			obj.position.y = -midY * scale;
-			obj.position.z = -midZ * scale;
+		let state = {
+			autoRotateEnabled: false,
+			orbitControlsEnabled: true
 		}
 
-		document.addEventListener("DOMContentLoaded", (evt) => {
+		if (Object.observe) {
+			state = Object.observe(state, (changeset) => {
+				render();
+			});
+		}
 
-			var explorer = document.querySelector('iiif-explorer');
-			//explorer.manifest = "https://edsilv.github.io/iiiframe/collection/";
-			explorer.manifest = "http://localhost:8888/collection/index.json";
+ 		function render() {
+			 if (!ascene) return;
+			camera.setAttribute('orbit-controls', `enabled: ${state.orbitControlsEnabled}; autoRotate: ${state.autoRotateEnabled}; target: 0 0 0; initialPosition: 0 0 0.75; minDistance: 0.5;`);
+		}
+
+		document.addEventListener('DOMContentLoaded', (evt) => {
+
+			document.querySelectorAll('input[type=checkbox]').forEach((input) => {
+				input.onchange = (evt) => {
+					state[evt.target.id] = evt.target.checked;
+				};
+			});
+
+			const explorer = document.querySelector('iiif-explorer');
+			//explorer.manifest = 'https://edsilv.github.io/iiiframe/collection/';
+			explorer.manifest = 'http://localhost:8888/collection/index.json';
 
 			explorer.addEventListener('onSelectManifest', (evt) => {
-				
-                var manifest = evt.detail.id;
-				var scene = document.querySelector('#scene');
+
+                const manifest = evt.detail.id;
+				const scene = document.querySelector('#scene');
 				scene.innerHTML = '';
 
-				var ascene = document.createElement('a-scene');
+				ascene = document.createElement('a-scene');
 				ascene.setAttribute('embedded', true);
 				scene.appendChild(ascene);
 
 				ascene.addEventListener('loaded', async (evt) => {
 
 					// iiiframe takes a manifest url and returns a set of a-frame entities
-					// you then add them to your scene and position the camera accordingly
+					// add them to your scene and position the camera accordingly
 
 					const entities = await iiiframe(manifest)
 
@@ -102,9 +91,12 @@
 						});
 					});
 
-					const camera = document.querySelector('a-entity[camera]');
-					camera.setAttribute('orbit-controls', 'target: 0 0 0; minDistance: 0; maxDistance: 180; initialPosition: 0 0 -1; screenSpacePanning: false; dampingFactor: 0.1');
+					// set up camera
+					camera = document.querySelector('a-entity[camera]');
+					const cameraObj = camera.object3D;
+					cameraObj.position.set(0, 0, 0);
 
+					render();
 				});
 				
             });

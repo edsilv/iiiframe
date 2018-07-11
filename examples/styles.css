@@ -1,0 +1,53 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
+#example {
+    display: flex;
+    height: 100%;
+}
+
+#options {
+    flex: 25%;
+    background: #2dc1ef;
+    padding: 1rem;
+}
+
+h3 {
+    margin-top: 2rem;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: #000;
+}
+
+label {
+    display: block;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    text-indent: -15px;
+}
+
+input {
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin: 0 5px 0 0;
+    vertical-align: bottom;
+    position: relative;
+    top: -1px;
+    *overflow: hidden;
+}
+
+#scene {
+    flex: 75%;
+}
