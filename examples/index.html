@@ -22,17 +22,18 @@
 
 			<h3>Options</h3>
 
-			<label><input type="checkbox" id="autoRotateEnabled" />Auto Rotate</label>
+			<label>
+				<input type="checkbox" id="autoRotateEnabled" />Auto Rotate</label>
 			<!-- <label><input type="checkbox" id="orbitControlsEnabled" />Orbit</label> -->
 
 		</div>
 
 		<div id="scene">
-			
+
 		</div>
 
 	</div>
-	
+
 	<script>
 
 		let ascene, camera;
@@ -48,8 +49,8 @@
 			});
 		}
 
- 		function render() {
-			 if (!ascene) return;
+		function render() {
+			if (!ascene) return;
 			camera.setAttribute('orbit-controls', `enabled: ${state.orbitControlsEnabled}; autoRotate: ${state.autoRotateEnabled}; target: 0 0 0; initialPosition: 0 0 0.75; minDistance: 0.5;`);
 		}
 
@@ -67,7 +68,7 @@
 
 			explorer.addEventListener('onSelectManifest', (evt) => {
 
-                const manifest = evt.detail.id;
+				const manifest = evt.detail.id;
 				const scene = document.querySelector('#scene');
 				scene.innerHTML = '';
 
@@ -85,7 +86,7 @@
 					entities.forEach((entity) => {
 						ascene.appendChild(entity);
 
-						entity.addEventListener('model-loaded', (obj) => {							
+						entity.addEventListener('model-loaded', (obj) => {
 							const object3D = obj.target.object3D;
 							iiiframe.utils.scaleAndPositionObject(object3D);
 						});
@@ -98,8 +99,8 @@
 
 					render();
 				});
-				
-            });
+
+			});
 
 		});
 	</script>
