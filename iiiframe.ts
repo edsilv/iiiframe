@@ -1,7 +1,13 @@
-window.iiiframe = async (manifesturl: string) => {
+declare var iiiframe: any;
 
-    const scalefactor = 100;
-    const ecsProposalEnabled = false;
+window.iiiframe = async (manifesturl: string, opts?: options) => {
+
+    let options: options =  {
+        scalefactor: 100,
+        ecsProposalEnabled: false
+    }
+
+    options = Object.assign(options, opts);
 
     const data = await manifesto.loadManifest(manifesturl);
     const manifest = manifesto.create(data);
@@ -32,7 +38,7 @@ window.iiiframe = async (manifesturl: string) => {
         const painting = getPaintingAnnotation(annos);
         let entity = parsePaintingAnnotation(painting);
 
-        if (ecsProposalEnabled) {
+        if (options.ecsProposalEnabled) {
             // parse remaining annotations (scale, rotate, position...)
             await Promise.all(annos.map(async anno => {
                 parseAnnotation(anno, entity);
@@ -52,6 +58,7 @@ window.iiiframe = async (manifesturl: string) => {
         }
     }
 
+    // experimental
     async function parseAnnotation(anno, entity) {
         
         const motivation = anno.getMotivation().value;
@@ -62,7 +69,7 @@ window.iiiframe = async (manifesturl: string) => {
 
         const body = anno.getBody()[0];
 
-        let json: any = await get(body.id);
+        let json: any = await iiiframe.utils.get(body.id);
         json = JSON.parse(json);
 
         switch (motivation) {
@@ -71,11 +78,11 @@ window.iiiframe = async (manifesturl: string) => {
                 if (entity.nodeName === 'A-IMAGE') {
                     // add width and height
                     const width = document.createAttribute('width');
-                    width.value = String(json.x / scalefactor);
+                    width.value = String(json.x / options.scalefactor);
                     entity.setAttributeNode(width);
 
                     const height = document.createAttribute('height');
-                    height.value = String(json.y / scalefactor);
+                    height.value = String(json.y / options.scalefactor);
                     entity.setAttributeNode(height);
                 } else {
                     // add scale component
@@ -133,7 +140,11 @@ window.iiiframe = async (manifesturl: string) => {
         return entity;
     }
 
-    function get(url) {
+}
+
+window.iiiframe.utils = {
+
+    get: (url) => {
         return new Promise((resolve, reject) => {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', url);
@@ -150,11 +161,8 @@ window.iiiframe = async (manifesturl: string) => {
             };
             xhr.send();
         });
-    }
+    },
 
-}
-
-window.iiiframe.utils = {
     scaleAndPositionObject: (obj) => {
         const bufferGeometry = obj.children[0].children[0].geometry;
         bufferGeometry.computeBoundingBox();

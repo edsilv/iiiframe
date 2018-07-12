@@ -6,9 +6,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-window.iiiframe = (manifesturl) => __awaiter(this, void 0, void 0, function* () {
-    const scalefactor = 100;
-    const ecsProposalEnabled = false;
+window.iiiframe = (manifesturl, opts) => __awaiter(this, void 0, void 0, function* () {
+    let options = {
+        scalefactor: 100,
+        ecsProposalEnabled: false
+    };
+    options = Object.assign(options, opts);
     const data = yield manifesto.loadManifest(manifesturl);
     const manifest = manifesto.create(data);
     const entities = yield parseManifest(manifest);
@@ -32,7 +35,7 @@ window.iiiframe = (manifesturl) => __awaiter(this, void 0, void 0, function* () 
             // get the painting annotation (jpg, gltf, obj, pdf...)
             const painting = getPaintingAnnotation(annos);
             let entity = parsePaintingAnnotation(painting);
-            if (ecsProposalEnabled) {
+            if (options.ecsProposalEnabled) {
                 // parse remaining annotations (scale, rotate, position...)
                 yield Promise.all(annos.map((anno) => __awaiter(this, void 0, void 0, function* () {
                     parseAnnotation(anno, entity);
@@ -50,6 +53,7 @@ window.iiiframe = (manifesturl) => __awaiter(this, void 0, void 0, function* () 
             }
         }
     }
+    // experimental
     function parseAnnotation(anno, entity) {
         return __awaiter(this, void 0, void 0, function* () {
             const motivation = anno.getMotivation().value;
@@ -57,17 +61,17 @@ window.iiiframe = (manifesturl) => __awaiter(this, void 0, void 0, function* () 
                 return;
             }
             const body = anno.getBody()[0];
-            let json = yield get(body.id);
+            let json = yield iiiframe.utils.get(body.id);
             json = JSON.parse(json);
             switch (motivation) {
                 case 'scale':
                     if (entity.nodeName === 'A-IMAGE') {
                         // add width and height
                         const width = document.createAttribute('width');
-                        width.value = String(json.x / scalefactor);
+                        width.value = String(json.x / options.scalefactor);
                         entity.setAttributeNode(width);
                         const height = document.createAttribute('height');
-                        height.value = String(json.y / scalefactor);
+                        height.value = String(json.y / options.scalefactor);
                         entity.setAttributeNode(height);
                     }
                     else {
@@ -118,7 +122,9 @@ window.iiiframe = (manifesturl) => __awaiter(this, void 0, void 0, function* () 
         }
         return entity;
     }
-    function get(url) {
+});
+window.iiiframe.utils = {
+    get: (url) => {
         return new Promise((resolve, reject) => {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', url);
@@ -135,9 +141,7 @@ window.iiiframe = (manifesturl) => __awaiter(this, void 0, void 0, function* () 
             };
             xhr.send();
         });
-    }
-});
-window.iiiframe.utils = {
+    },
     scaleAndPositionObject: (obj) => {
         const bufferGeometry = obj.children[0].children[0].geometry;
         bufferGeometry.computeBoundingBox();

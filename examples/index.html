@@ -22,8 +22,7 @@
 
 			<h3>Options</h3>
 
-			<label>
-				<input type="checkbox" id="autoRotateEnabled" />Auto Rotate</label>
+			<label><input type="checkbox" id="autoRotateEnabled" />Auto Rotate</label>
 			<!-- <label><input type="checkbox" id="orbitControlsEnabled" />Orbit</label> -->
 
 		</div>
@@ -81,7 +80,9 @@
 					// iiiframe takes a manifest url and returns a set of a-frame entities
 					// add them to your scene and position the camera accordingly
 
-					const entities = await iiiframe(manifest);
+					const entities = await iiiframe(manifest, {
+						ecsProposalEnabled: false
+					});
 
 					entities.forEach((entity) => {
 						ascene.appendChild(entity);

@@ -9,6 +9,7 @@
     "@types/node": "10.3.2",
     "biiif": "0.3.6",
     "http-server": "^0.11.1",
+    "manifesto.js": "^2.2.29",
     "typescript": "^2.9.2"
   },
   "scripts": {
@@ -28,6 +29,6 @@
   },
   "homepage": "https://github.com/edsilv/iiiframe#readme",
   "dependencies": {
-    "manifesto.js": "^2.2.29"
+    
   }
 }
