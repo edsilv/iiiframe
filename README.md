@@ -1,6 +1,4 @@
-# iiiframe
-
-IIIF Manifest -> A-Frame Entities
+# IIIF Manifest -> A-Frame Entities
 
 ```js
 const entities = await iiiframe('https://example.com/iiif.json');
@@ -10,7 +8,7 @@ entities.forEach((entity) => {
 });
 ```
 
-<!-->
+<!--
 An implementation of https://github.com/edsilv/iiif-ecs-proposal (work in progress)
 
 example: https://edsilv.github.io/iiiframe/examples/
