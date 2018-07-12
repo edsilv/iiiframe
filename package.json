@@ -3,9 +3,13 @@
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
+  "types": "./dist/iiiframe.d.ts",
   "devDependencies": {
+    "@types/three": "0.91.0",
+    "@types/node": "10.3.2",
     "biiif": "0.3.6",
-    "http-server": "^0.11.1"
+    "http-server": "^0.11.1",
+    "typescript": "^2.9.2"
   },
   "scripts": {
     "build": "./node_modules/.bin/biiif collection -u https://edsilv.github.io/iiiframe/collection",
@@ -17,10 +21,13 @@
     "url": "git+https://github.com/edsilv/iiiframe.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "@edsilv",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/edsilv/iiiframe/issues"
   },
-  "homepage": "https://github.com/edsilv/iiiframe#readme"
+  "homepage": "https://github.com/edsilv/iiiframe#readme",
+  "dependencies": {
+    "manifesto.js": "^2.2.29"
+  }
 }
