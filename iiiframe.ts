@@ -3,7 +3,6 @@ declare var iiiframe: any;
 window.iiiframe = async (manifesturl: string, opts?: options) => {
 
     let options: options =  {
-        scalefactor: 100,
         ecsProposalEnabled: false
     }
 
@@ -36,7 +35,7 @@ window.iiiframe = async (manifesturl: string, opts?: options) => {
 
         // get the painting annotation (jpg, gltf, obj, pdf...)
         const painting = getPaintingAnnotation(annos);
-        let entity = parsePaintingAnnotation(painting);
+        let entity = parsePaintingAnnotation(canvas, painting);
 
         if (options.ecsProposalEnabled) {
             // parse remaining annotations (scale, rotate, position...)
@@ -78,11 +77,11 @@ window.iiiframe = async (manifesturl: string, opts?: options) => {
                 if (entity.nodeName === 'A-IMAGE') {
                     // add width and height
                     const width = document.createAttribute('width');
-                    width.value = String(json.x / options.scalefactor);
+                    width.value = json.x;
                     entity.setAttributeNode(width);
 
                     const height = document.createAttribute('height');
-                    height.value = String(json.y / options.scalefactor);
+                    height.value = json.y;
                     entity.setAttributeNode(height);
                 } else {
                     // add scale component
@@ -104,7 +103,7 @@ window.iiiframe = async (manifesturl: string, opts?: options) => {
         
     }
 
-    function parsePaintingAnnotation(anno) {
+    function parsePaintingAnnotation(canvas, anno) {
         const body = anno.getBody()[0];
         const format = body.getFormat().value;
         let entity;
@@ -117,6 +116,20 @@ window.iiiframe = async (manifesturl: string, opts?: options) => {
                 const src = document.createAttribute('src');
                 src.value = body.id;
                 entity.setAttributeNode(src);
+
+                // width/height
+                const w = canvas.getWidth();
+                const h = canvas.getHeight();
+
+                if (w !== undefined && h !== undefined) {
+                    const width = document.createAttribute('width');
+                    width.value = w;
+                    entity.setAttributeNode(width);
+
+                    const height = document.createAttribute('height');
+                    height.value = h;
+                    entity.setAttributeNode(height);
+                }
 
                 // geometry component
                 // https://github.com/aframevr/aframe/blob/bbc2f0325cdd3c4bd95a69ce4ce9705b0e6a041d/src/extras/primitives/primitives/a-image.js
@@ -163,21 +176,35 @@ window.iiiframe.utils = {
         });
     },
 
+    findGeometry: (children) => {
+        const geometry = children[0].geometry;
+        if (geometry) {
+            return geometry;
+        } else if (children[0].children) {
+            return iiiframe.utils.findGeometry(children[0].children);
+        }
+        return null;
+    },
+
     scaleAndPositionObject: (obj) => {
-        const bufferGeometry = obj.children[0].children[0].geometry;
-        bufferGeometry.computeBoundingBox();
-        const sizeX = bufferGeometry.boundingBox.max.x - bufferGeometry.boundingBox.min.x;
-        const sizeY = bufferGeometry.boundingBox.max.y - bufferGeometry.boundingBox.min.y;
-        const sizeZ = bufferGeometry.boundingBox.max.z - bufferGeometry.boundingBox.min.z;
-        const diagonalSize = Math.sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ);
-        const scale = 1.0 / diagonalSize;
-        const midX = (bufferGeometry.boundingBox.min.x + bufferGeometry.boundingBox.max.x) / 2;
-        const midY = (bufferGeometry.boundingBox.min.y + bufferGeometry.boundingBox.max.y) / 2;
-        const midZ = (bufferGeometry.boundingBox.min.z + bufferGeometry.boundingBox.max.z) / 2;
-    
-        obj.scale.multiplyScalar(scale);
-        obj.position.x = -midX * scale;
-        obj.position.y = -midY * scale;
-        obj.position.z = -midZ * scale;
+        const geometry = iiiframe.utils.findGeometry(obj.children);
+
+        if (geometry) {
+            geometry.computeBoundingBox();
+            const sizeX = geometry.boundingBox.max.x - geometry.boundingBox.min.x;
+            const sizeY = geometry.boundingBox.max.y - geometry.boundingBox.min.y;
+            const sizeZ = geometry.boundingBox.max.z - geometry.boundingBox.min.z;
+            const diagonalSize = Math.sqrt(sizeX * sizeX + sizeY * sizeY + sizeZ * sizeZ);
+            const scale = 1.0 / diagonalSize;
+            const midX = (geometry.boundingBox.min.x + geometry.boundingBox.max.x) / 2;
+            const midY = (geometry.boundingBox.min.y + geometry.boundingBox.max.y) / 2;
+            const midZ = (geometry.boundingBox.min.z + geometry.boundingBox.max.z) / 2;
+        
+            obj.scale.multiplyScalar(scale);
+            obj.position.x = -midX * scale;
+            obj.position.y = -midY * scale;
+            obj.position.z = -midZ * scale;
+        }
+        
     }
 }

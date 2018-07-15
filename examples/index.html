@@ -87,10 +87,19 @@
 					entities.forEach((entity) => {
 						ascene.appendChild(entity);
 
+						
 						entity.addEventListener('model-loaded', (obj) => {
 							const object3D = obj.target.object3D;
 							iiiframe.utils.scaleAndPositionObject(object3D);
 						});
+
+						if (entity.nodeName === 'A-IMAGE') {
+							entity.addEventListener('loaded', (obj) => {
+								const object3D = obj.target.object3D;
+								iiiframe.utils.scaleAndPositionObject(object3D);
+							});
+						}
+
 					});
 
 					// set up camera
