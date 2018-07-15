@@ -5,9 +5,9 @@
   "main": "index.js",
   "types": "./dist/iiiframe.d.ts",
   "devDependencies": {
-    "@types/three": "0.91.0",
     "@types/node": "10.3.2",
-    "biiif": "0.3.6",
+    "@types/three": "0.91.0",
+    "biiif-cli": "^0.1.4",
     "http-server": "^0.11.1",
     "manifesto.js": "^2.2.29",
     "typescript": "^2.9.2"
@@ -28,7 +28,5 @@
     "url": "https://github.com/edsilv/iiiframe/issues"
   },
   "homepage": "https://github.com/edsilv/iiiframe#readme",
-  "dependencies": {
-    
-  }
+  "dependencies": {}
 }

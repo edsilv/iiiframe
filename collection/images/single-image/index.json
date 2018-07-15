@@ -63,7 +63,9 @@
         "@none": [
           "_single-image"
         ]
-      }
+      },
+      "width": 600,
+      "height": 400
     }
   ],
   "label": {
