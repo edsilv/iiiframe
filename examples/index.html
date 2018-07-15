@@ -50,7 +50,8 @@
 
 		function render() {
 			if (!ascene) return;
-			camera.setAttribute('orbit-controls', `enabled: ${state.orbitControlsEnabled}; autoRotate: ${state.autoRotateEnabled}; target: 0 0 0; initialPosition: 0 0 0.75; minDistance: 0.5;`);
+			camera.setAttribute('camera', 'fov: 80; zoom: 1;');
+			camera.setAttribute('orbit-controls', `enabled: ${state.orbitControlsEnabled}; autoRotate: ${state.autoRotateEnabled}; target: 0 0 0; initialPosition: 0 0 0.75; minDistance: 0.2; enableDamping: true`);
 		}
 
 		document.addEventListener('DOMContentLoaded', (evt) => {
