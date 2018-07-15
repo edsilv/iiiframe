@@ -50,6 +50,10 @@
 
 		function render() {
 			if (!ascene) return;
+			// set up camera
+			camera = ascene.querySelector('a-entity[camera]');
+			const cameraObj = camera.object3D;
+			cameraObj.position.set(0, 0, 0);
 			camera.setAttribute('camera', 'fov: 80; zoom: 1;');
 			camera.setAttribute('orbit-controls', `enabled: ${state.orbitControlsEnabled}; autoRotate: ${state.autoRotateEnabled}; target: 0 0 0; initialPosition: 0 0 0.75; minDistance: 0.2; enableDamping: true`);
 		}
@@ -87,7 +91,6 @@
 
 					entities.forEach((entity) => {
 						ascene.appendChild(entity);
-
 						
 						entity.addEventListener('model-loaded', (obj) => {
 							const object3D = obj.target.object3D;
@@ -102,11 +105,6 @@
 						}
 
 					});
-
-					// set up camera
-					camera = document.querySelector('a-entity[camera]');
-					const cameraObj = camera.object3D;
-					cameraObj.position.set(0, 0, 0);
 
 					render();
 				});
