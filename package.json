@@ -1,8 +1,8 @@
 {
   "name": "iiiframe",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "IIIF Manifest -> A-Frame Entities",
+  "main": "iiiframe.js",
   "types": "./iiiframe.d.ts",
   "devDependencies": {
     "@types/node": "10.3.2",
@@ -15,13 +15,13 @@
   "scripts": {
     "build": "./node_modules/.bin/biiif collection -u https://edsilv.github.io/iiiframe/collection",
     "devbuild": "./node_modules/.bin/biiif collection -u http://localhost:8888/collection",
-    "start": "http-server -c-1 -p 8888 ./"
+    "start": "http-server -c-1 -p 8888 ./examples"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/edsilv/iiiframe.git"
   },
-  "keywords": [],
+  "keywords": ["IIIF", "A-Frame"],
   "author": "@edsilv",
   "license": "MIT",
   "bugs": {
