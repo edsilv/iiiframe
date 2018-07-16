@@ -1,6 +1,6 @@
 {
   "name": "iiiframe",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "IIIF Manifest -> A-Frame Entities",
   "main": "iiiframe.js",
   "types": "./iiiframe.d.ts",
@@ -21,7 +21,10 @@
     "type": "git",
     "url": "git+https://github.com/edsilv/iiiframe.git"
   },
-  "keywords": ["IIIF", "A-Frame"],
+  "keywords": [
+    "IIIF",
+    "A-Frame"
+  ],
   "author": "@edsilv",
   "license": "MIT",
   "bugs": {
