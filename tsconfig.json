@@ -4,6 +4,7 @@
 			"dom",
 			"es6"
 		],
+		"declaration": true,
 		"moduleResolution": "node",
 		"module": "commonjs",
 		"target": "es6",

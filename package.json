@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
-  "types": "./dist/iiiframe.d.ts",
+  "types": "./iiiframe.d.ts",
   "devDependencies": {
     "@types/node": "10.3.2",
     "@types/three": "0.91.0",

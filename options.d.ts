@@ -1,0 +1,3 @@
+interface options {
+    ecsProposalEnabled: boolean;
+}
