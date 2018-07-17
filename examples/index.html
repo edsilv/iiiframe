@@ -7,6 +7,7 @@
 	<script src="https://unpkg.com/manifesto.js/dist/client/manifesto.bundle.js"></script>
 	<script src="https://unpkg.com/iiif-explorer/dist/iiifexplorer.js"></script>
 	<script src="../iiiframe.js"></script>
+	<!-- <script src="https://unpkg.com/iiiframe"></script> -->
 	<script src="https://unpkg.com/proxy-observe@0.0.21/browser/proxy-observe.min.js"></script>
 </head>
 
@@ -85,9 +86,7 @@
 					// iiiframe takes a manifest url and returns a set of a-frame entities
 					// add them to your scene and position the camera accordingly
 
-					const entities = await iiiframe(manifest, {
-						ecsProposalEnabled: false
-					});
+					const entities = await iiiframe(manifest);
 
 					entities.forEach((entity) => {
 						ascene.appendChild(entity);
