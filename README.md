@@ -1,38 +1,5 @@
 # IIIF Manifest -> A-Frame Entities
 
-```html
-<head>
-    <title>My A-Frame Scene</title>
-    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-orbit-controls@1.0.0/dist/aframe-orbit-controls.min.js"></script>
-    <script src="https://unpkg.com/manifesto.js/dist/client/manifesto.bundle.js"></script>
-    <script src="https://unpkg.com/iiiframe"></script>
-</head>
-
-<body>
-    <a-scene></a-scene>
-    <script>
-        document.addEventListener('DOMContentLoaded', async (evt) => {
-            const scene = document.querySelector('a-scene');
-            const entities = await iiiframe('https://edsilv.github.io/iiiframe/collection/gltf/fisherman/index.json');
-
-            entities.forEach((entity) => {
-                scene.appendChild(entity);
-
-                entity.addEventListener('model-loaded', (obj) => {
-                    const object3D = obj.target.object3D;
-                    iiiframe.utils.scaleAndPositionObject(object3D);
-                    camera = scene.querySelector('a-entity[camera]');
-                    const cameraObj = camera.object3D;
-                    cameraObj.position.set(0, 0, 0);
-                    camera.setAttribute('orbit-controls', 'target: 0 0 0; initialPosition: 0 0 0.75;');
-                });
-            });
-        });
-    </script>
-</body>
-```
-
 ### Examples
 
 https://edsilv.github.io/iiiframe/examples/

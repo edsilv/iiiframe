@@ -1,118 +1,15 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
-	<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
-	<script src="https://unpkg.com/aframe-orbit-controls@1.0.0/dist/aframe-orbit-controls.min.js"></script>
-	<script src="https://unpkg.com/manifesto.js/dist/client/manifesto.bundle.js"></script>
-	<script src="https://unpkg.com/iiif-explorer/dist/iiifexplorer.js"></script>
-	<script src="../iiiframe.js"></script>
-	<!-- <script src="https://unpkg.com/iiiframe"></script> -->
-	<script src="https://unpkg.com/proxy-observe@0.0.21/browser/proxy-observe.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>IIIFrame Examples</title>
 </head>
-
 <body>
-
-	<div id="example">
-
-		<div id="options">
-
-			<h3>Choose a manifest</h3>
-
-			<iiif-explorer></iiif-explorer>
-
-			<h3>Options</h3>
-
-			<label><input type="checkbox" id="autoRotateEnabled" />Auto Rotate</label>
-			<!-- <label><input type="checkbox" id="orbitControlsEnabled" />Orbit</label> -->
-
-		</div>
-
-		<div id="scene">
-
-		</div>
-
-	</div>
-
-	<script>
-
-		let ascene, camera;
-
-		let state = {
-			autoRotateEnabled: false,
-			orbitControlsEnabled: true
-		}
-
-		if (Object.observe) {
-			state = Object.observe(state, (changeset) => {
-				render();
-			});
-		}
-
-		function render() {
-			if (!ascene) return;
-			// set up camera
-			camera = ascene.querySelector('a-entity[camera]');
-			const cameraObj = camera.object3D;
-			cameraObj.position.set(0, 0, 0);
-			camera.setAttribute('camera', 'fov: 80; zoom: 1;');
-			camera.setAttribute('orbit-controls', `enabled: ${state.orbitControlsEnabled}; autoRotate: ${state.autoRotateEnabled}; target: 0 0 0; initialPosition: 0 0 0.75; minDistance: 0.2; enableDamping: true`);
-		}
-
-		document.addEventListener('DOMContentLoaded', (evt) => {
-
-			document.querySelectorAll('input[type=checkbox]').forEach((input) => {
-				input.onchange = (evt) => {
-					state[evt.target.id] = evt.target.checked;
-				};
-			});
-
-			const explorer = document.querySelector('iiif-explorer');
-			//explorer.manifest = 'https://edsilv.github.io/iiiframe/collection/';
-			explorer.manifest = 'http://localhost:8888/collection/index.json';
-
-			explorer.addEventListener('onSelectManifest', (evt) => {
-
-				const manifest = evt.detail.id;
-				const scene = document.querySelector('#scene');
-				scene.innerHTML = '';
-
-				ascene = document.createElement('a-scene');
-				ascene.setAttribute('embedded', true);
-				scene.appendChild(ascene);
-
-				ascene.addEventListener('loaded', async (evt) => {
-
-					// iiiframe takes a manifest url and returns a set of a-frame entities
-					// add them to your scene and position the camera accordingly
-
-					const entities = await iiiframe(manifest);
-
-					entities.forEach((entity) => {
-						ascene.appendChild(entity);
-						
-						entity.addEventListener('model-loaded', (obj) => {
-							const object3D = obj.target.object3D;
-							iiiframe.utils.scaleAndPositionObject(object3D);
-						});
-
-						if (entity.nodeName === 'A-IMAGE') {
-							entity.addEventListener('loaded', (obj) => {
-								const object3D = obj.target.object3D;
-								iiiframe.utils.scaleAndPositionObject(object3D);
-							});
-						}
-
-					});
-
-					render();
-				});
-
-			});
-
-		});
-	</script>
-
+    <ul>
+        <li><a href="manifest.html">Simple Manifest Example</a></li>
+        <li><a href="collection.html">Collection Explorer Example</a></li>
+    </ul>
 </body>
-
 </html>
