@@ -1,9 +1,9 @@
 {
-  "id": "http://localhost:8888/collection/gltf/index.json",
+  "id": "https://edsilv.github.io/iiiframe/collection/gltf/index.json",
   "type": "Collection",
   "items": [
     {
-      "id": "http://localhost:8888/collection/gltf/fisherman/index.json",
+      "id": "https://edsilv.github.io/iiiframe/collection/gltf/fisherman/index.json",
       "type": "Manifest",
       "label": {
         "@none": [
@@ -12,13 +12,13 @@
       },
       "thumbnail": [
         {
-          "id": "http://localhost:8888/collection/gltf/fisherman/thumb.jpg",
+          "id": "https://edsilv.github.io/iiiframe/collection/gltf/fisherman/thumb.jpg",
           "type": "Image"
         }
       ]
     },
     {
-      "id": "http://localhost:8888/collection/gltf/gourd/index.json",
+      "id": "https://edsilv.github.io/iiiframe/collection/gltf/gourd/index.json",
       "type": "Manifest",
       "label": {
         "@none": [
@@ -27,7 +27,7 @@
       },
       "thumbnail": [
         {
-          "id": "http://localhost:8888/collection/gltf/gourd/thumb.jpg",
+          "id": "https://edsilv.github.io/iiiframe/collection/gltf/gourd/thumb.jpg",
           "type": "Image"
         }
       ]

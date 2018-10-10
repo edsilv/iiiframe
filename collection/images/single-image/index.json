@@ -1,21 +1,51 @@
 {
-  "id": "http://localhost:8888/collection/images/single-image/index.json",
+  "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/index.json",
   "type": "Manifest",
   "items": [
     {
-      "id": "http://localhost:8888/collection/images/single-image/index.json/canvas/0",
+      "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/index.json/canvas/0",
       "type": "Canvas",
       "items": [
         {
-          "id": "http://localhost:8888/collection/images/single-image/index.json/canvas/0/annotationpage/0",
+          "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/index.json/canvas/0/annotationpage/0",
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "http://localhost:8888/collection/images/single-image/index.json/canvas/0/annotation/0",
+              "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/index.json/canvas/0/annotation/0",
+              "type": "Annotation",
+              "motivation": "scale",
+              "body": {
+                "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/_single-image/assets/scale.json",
+                "format": "application/json",
+                "label": {
+                  "@none": [
+                    "_single-image"
+                  ]
+                }
+              },
+              "target": "https://edsilv.github.io/iiiframe/collection/images/single-image/index.json/canvas/0"
+            },
+            {
+              "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/index.json/canvas/0/annotation/1",
+              "type": "Annotation",
+              "motivation": "position",
+              "body": {
+                "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/_single-image/assets/position.json",
+                "format": "application/json",
+                "label": {
+                  "@none": [
+                    "_single-image"
+                  ]
+                }
+              },
+              "target": "https://edsilv.github.io/iiiframe/collection/images/single-image/index.json/canvas/0"
+            },
+            {
+              "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/index.json/canvas/0/annotation/2",
               "type": "Annotation",
               "motivation": "painting",
               "body": {
-                "id": "http://localhost:8888/collection/images/single-image/_single-image/assets/abyssinian.jpg",
+                "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/_single-image/assets/abyssinian.jpg",
                 "type": "Image",
                 "format": "image/jpeg",
                 "label": {
@@ -24,37 +54,7 @@
                   ]
                 }
               },
-              "target": "http://localhost:8888/collection/images/single-image/index.json/canvas/0"
-            },
-            {
-              "id": "http://localhost:8888/collection/images/single-image/index.json/canvas/0/annotation/1",
-              "type": "Annotation",
-              "motivation": "position",
-              "body": {
-                "id": "http://localhost:8888/collection/images/single-image/_single-image/assets/position.json",
-                "format": "application/json",
-                "label": {
-                  "@none": [
-                    "_single-image"
-                  ]
-                }
-              },
-              "target": "http://localhost:8888/collection/images/single-image/index.json/canvas/0"
-            },
-            {
-              "id": "http://localhost:8888/collection/images/single-image/index.json/canvas/0/annotation/2",
-              "type": "Annotation",
-              "motivation": "scale",
-              "body": {
-                "id": "http://localhost:8888/collection/images/single-image/_single-image/assets/scale.json",
-                "format": "application/json",
-                "label": {
-                  "@none": [
-                    "_single-image"
-                  ]
-                }
-              },
-              "target": "http://localhost:8888/collection/images/single-image/index.json/canvas/0"
+              "target": "https://edsilv.github.io/iiiframe/collection/images/single-image/index.json/canvas/0"
             }
           ]
         }

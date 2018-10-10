@@ -8,14 +8,14 @@
     "@types/node": "10.3.2",
     "@types/three": "0.91.0",
     "biiif-cli": "^0.1.4",
-    "http-server": "^0.11.1",
     "manifesto.js": "^2.2.29",
+    "serve": "^10.0.2",
     "typescript": "^2.9.2"
   },
   "scripts": {
-    "build": "./node_modules/.bin/biiif collection -u https://edsilv.github.io/iiiframe/collection",
-    "devbuild": "./node_modules/.bin/biiif collection -u http://localhost:8888/collection",
-    "start": "http-server -c-1 -p 8888 ./examples"
+    "build": "npx tsc && npx biiif collection -u https://edsilv.github.io/iiiframe/collection",
+    "devbuild": "npx biiif collection -u http://localhost:5000/collection",
+    "start": "npx serve"
   },
   "repository": {
     "type": "git",

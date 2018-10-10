@@ -1,9 +1,9 @@
 {
-  "id": "http://localhost:8888/collection/index.json",
+  "id": "https://edsilv.github.io/iiiframe/collection/index.json",
   "type": "Collection",
   "items": [
     {
-      "id": "http://localhost:8888/collection/gltf/index.json",
+      "id": "https://edsilv.github.io/iiiframe/collection/gltf/index.json",
       "type": "Collection",
       "label": {
         "@none": [
@@ -12,7 +12,7 @@
       }
     },
     {
-      "id": "http://localhost:8888/collection/images/index.json",
+      "id": "https://edsilv.github.io/iiiframe/collection/images/index.json",
       "type": "Collection",
       "label": {
         "@none": [
