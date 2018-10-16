@@ -13,10 +13,11 @@
             {
               "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/index.json/canvas/0/annotation/0",
               "type": "Annotation",
-              "motivation": "scale",
+              "motivation": "painting",
               "body": {
-                "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/_single-image/assets/scale.json",
-                "format": "application/json",
+                "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/_single-image/assets/abyssinian.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
                 "label": {
                   "@none": [
                     "_single-image"
@@ -43,11 +44,10 @@
             {
               "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/index.json/canvas/0/annotation/2",
               "type": "Annotation",
-              "motivation": "painting",
+              "motivation": "scale",
               "body": {
-                "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/_single-image/assets/abyssinian.jpg",
-                "type": "Image",
-                "format": "image/jpeg",
+                "id": "https://edsilv.github.io/iiiframe/collection/images/single-image/_single-image/assets/scale.json",
+                "format": "application/json",
                 "label": {
                   "@none": [
                     "_single-image"

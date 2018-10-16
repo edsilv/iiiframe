@@ -2,8 +2,8 @@
   "name": "iiiframe",
   "version": "0.0.1",
   "description": "IIIF Manifest -> A-Frame Entities",
-  "main": "iiiframe.js",
-  "types": "./iiiframe.d.ts",
+  "main": "./dist/iiiframe.js",
+  "types": "./dist/iiiframe.d.ts",
   "devDependencies": {
     "@types/node": "10.3.2",
     "@types/three": "0.91.0",
@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "npx tsc && npx biiif collection -u https://edsilv.github.io/iiiframe/collection",
-    "devbuild": "npx biiif collection -u http://localhost:5000/collection",
+    "dev": "npx biiif collection -u http://localhost:5000/collection",
     "start": "npx serve"
   },
   "repository": {
