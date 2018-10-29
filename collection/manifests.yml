@@ -1,0 +1,3 @@
+manifests:
+- id: https://nomad-project.co.uk/objects/collection/index.json
+  label: Nomad Project
