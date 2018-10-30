@@ -1,3 +1,5 @@
 manifests:
 - id: https://nomad-project.co.uk/objects/collection/index.json
   label: Nomad Project
+- id: https://edsilv.github.io/iiif-3d-manifests/collection/index.json
+  label: IIIF 3D Examples

@@ -79,6 +79,7 @@
 
 				ascene = document.createElement('a-scene');
 				ascene.setAttribute('embedded', true);
+				ascene.setAttribute('renderer', 'gammaOutput: true');
 				scene.appendChild(ascene);
 
 				ascene.addEventListener('loaded', async (evt) => {

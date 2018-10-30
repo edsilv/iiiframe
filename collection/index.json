@@ -3,11 +3,11 @@
   "type": "Collection",
   "items": [
     {
-      "id": "http://localhost:5000/collection/gltf/index.json",
+      "id": "https://edsilv.github.io/iiif-3d-manifests/collection/index.json",
       "type": "Collection",
       "label": {
         "@none": [
-          "gltf"
+          "IIIF 3D Examples"
         ]
       }
     },
