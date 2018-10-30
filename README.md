@@ -1,10 +1,10 @@
 # IIIF Manifest -> A-Frame Entities
 
+<!--
 ### Examples
 
 https://edsilv.github.io/iiiframe/examples/
 
-<!--
 An implementation of https://github.com/edsilv/iiif-ecs-proposal (work in progress)
 
 example: https://edsilv.github.io/iiiframe/examples/

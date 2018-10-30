@@ -28,10 +28,11 @@
             {
               "id": "http://localhost:5000/collection/images/single-image/index.json/canvas/0/annotation/1",
               "type": "Annotation",
-              "motivation": "scale",
+              "motivation": "painting",
               "body": {
-                "id": "http://localhost:5000/collection/images/single-image/_single-image/assets/scale.json",
-                "format": "application/json",
+                "id": "http://localhost:5000/collection/images/single-image/_single-image/assets/abyssinian.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
                 "label": {
                   "@none": [
                     "_single-image"
@@ -43,11 +44,10 @@
             {
               "id": "http://localhost:5000/collection/images/single-image/index.json/canvas/0/annotation/2",
               "type": "Annotation",
-              "motivation": "painting",
+              "motivation": "scale",
               "body": {
-                "id": "http://localhost:5000/collection/images/single-image/_single-image/assets/abyssinian.jpg",
-                "type": "Image",
-                "format": "image/jpeg",
+                "id": "http://localhost:5000/collection/images/single-image/_single-image/assets/scale.json",
+                "format": "application/json",
                 "label": {
                   "@none": [
                     "_single-image"

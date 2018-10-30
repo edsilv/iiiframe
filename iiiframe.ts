@@ -1,5 +1,9 @@
 declare var iiiframe: any;
 
+interface options {
+    ecsProposalEnabled: boolean;
+}
+
 window.iiiframe = async (manifesturl: string, opts?: options) => {
 
     let options: options =  {
@@ -68,7 +72,7 @@ window.iiiframe = async (manifesturl: string, opts?: options) => {
 
         const body = anno.getBody()[0];
 
-        let json: any = await iiiframe.utils.get(body.id);
+        let json: any = await iiiframe.utils.fetch(body.id);
         json = JSON.parse(json);
 
         switch (motivation) {
@@ -157,7 +161,7 @@ window.iiiframe = async (manifesturl: string, opts?: options) => {
 
 window.iiiframe.utils = {
 
-    get: (url) => {
+    fetch: (url) => {
         return new Promise((resolve, reject) => {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', url);

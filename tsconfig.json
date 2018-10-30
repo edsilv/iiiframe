@@ -5,6 +5,7 @@
 			"es6"
 		],
 		"declaration": true,
+		"declarationDir": "./dist",
 		"moduleResolution": "node",
 		"module": "commonjs",
 		"target": "es6",
@@ -13,12 +14,7 @@
             "manifesto.js",
             "node",
             "three"
-        ]
-	},
-	"include": [
-		"*"
-	],
-	"exclude": [
-		"node_modules"
-	]
+		],
+		"outDir": "./dist"
+	}
 }

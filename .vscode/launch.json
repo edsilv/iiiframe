@@ -14,7 +14,7 @@
             },
             "runtimeArgs": [
                 "run-script",
-                "devbuild"
+                "dev"
             ],
             "port": 5858
         },
