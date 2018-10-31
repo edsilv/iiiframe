@@ -1,5 +1,7 @@
 # IIIF Manifest -> A-Frame Entities
 
+[![iiiframe on npm](https://img.shields.io/npm/v/iiiframe.svg?style=flat)](https://www.npmjs.com/package/iiiframe)
+
 ```js
 document.addEventListener('DOMContentLoaded', async (evt) => {
     const entities = await iiiframe('https://iiif-3d-manifests.netlify.com/collection/gltf/woody/index.json');
