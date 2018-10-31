@@ -161,7 +161,7 @@ window.iiiframe = async (manifesturl: string, opts?: options) => {
 
 window.iiiframe.utils = {
 
-    fetch: (url) => {
+    fetch: (url: string): Promise<void> => {
         return new Promise((resolve, reject) => {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', url);
@@ -180,7 +180,7 @@ window.iiiframe.utils = {
         });
     },
 
-    findGeometry: (children) => {
+    findGeometry: (children): THREE.Geometry | null => {
         const geometry = children[0].geometry;
         if (geometry) {
             return geometry;
@@ -190,8 +190,8 @@ window.iiiframe.utils = {
         return null;
     },
 
-    scaleAndPositionObject: (obj) => {
-        const geometry = iiiframe.utils.findGeometry(obj.children);
+    scaleAndPositionObject: (obj: THREE.Object3D): void => {
+        const geometry: THREE.Geometry | null = iiiframe.utils.findGeometry(obj.children);
 
         if (geometry) {
             geometry.computeBoundingBox();
@@ -210,5 +210,38 @@ window.iiiframe.utils = {
             obj.position.z = -midZ * scale;
         }
         
+    },
+
+    getBoundingBox: (obj: THREE.Object3D): THREE.Box3 => {
+        return new THREE.Box3().setFromObject(obj);
+    },
+
+    getBoundingMag: (obj: THREE.Object3D): number => {
+        const size: THREE.Vector3 = new THREE.Vector3();
+        iiiframe.utils.getBoundingBox(obj).getSize(size).length();
+        return size.length();
+    },
+    
+    /**
+     * @param  {THREE.Object3D} obj
+     * @param  {number} multiplier - Multiply the magnitude of the object bounding vector by this number
+     * @returns number
+     */
+    getCameraZ: (obj: THREE.Object3D, multiplier: number): number => {
+        return iiiframe.utils.getBoundingMag() * multiplier;
+    },
+
+    /**
+     * @param  {THREE.Object3D} obj
+     * @param  {number} multiplier - Multiply the magnitude of the object bounding vector by this number
+     * @returns number
+     */
+    getFov: (obj: THREE.Object3D, multiplier: number): number => {
+
+        const dist: number = iiiframe.utils.getCameraZ(obj, multiplier);
+        const mag: number = iiiframe.utils.getBoundingMag(obj);
+        let fov: number = 2 * Math.atan(mag / (2 * dist)) * (180 / Math.PI);
+
+        return fov;
     }
 }
