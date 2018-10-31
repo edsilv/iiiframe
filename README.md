@@ -1,5 +1,19 @@
 # IIIF Manifest -> A-Frame Entities
 
+```js
+document.addEventListener('DOMContentLoaded', async (evt) => {
+    const entities = await iiiframe('https://iiif-3d-manifests.netlify.com/collection/gltf/woody/index.json');
+    const sceneEl = document.querySelector('a-scene');
+    await iiiframe.utils.appendEntities(entities, sceneEl);
+    iiiframe.utils.scaleAndPositionObject(entities[0]);
+    iiiframe.utils.createOrbitCamera(sceneEl, entities[0]);
+});
+```
+
+### Examples
+
+    npm start
+
 <!--
 ### Examples
 
