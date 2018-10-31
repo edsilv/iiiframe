@@ -21,9 +21,9 @@
 
 			<iiif-explorer></iiif-explorer>
 
-			<h3>Options</h3>
+			<!-- <h3>Options</h3> -->
 
-			<label><input type="checkbox" id="autoRotateEnabled" />Auto Rotate</label>
+			<!-- <label><input type="checkbox" id="autoRotateEnabled" />Auto Rotate</label> -->
 			<!-- <label><input type="checkbox" id="orbitControlsEnabled" />Orbit</label> -->
 
 		</div>
@@ -36,10 +36,9 @@
 
 	<script>
 
-		let ascene, camera;
+		let manifest, sceneEl, object;
 
 		let state = {
-			autoRotateEnabled: false,
 			orbitControlsEnabled: true
 		}
 
@@ -49,14 +48,39 @@
 			});
 		}
 
+		function setup() {
+
+			const scene = document.querySelector('#scene');
+			scene.innerHTML = '';
+
+			sceneEl = document.createElement('a-scene');
+			sceneEl.setAttribute('embedded', true);
+			scene.appendChild(sceneEl);
+
+			const objectContainer = document.createElement('a-entity');
+			sceneEl.appendChild(objectContainer);
+			object = objectContainer.object3D;
+
+			sceneEl.addEventListener('loaded', async (evt) => {
+
+				// iiiframe takes a manifest url and returns a set of a-frame entities
+				// add them to your scene and position the camera accordingly
+
+				const entities = await iiiframe(manifest);
+				let entitiesLoaded = 0;
+
+				await iiiframe.utils.appendEntities(entities, objectContainer);
+
+				render();
+			});
+		}
+
 		function render() {
-			if (!ascene) return;
-			// set up camera
-			camera = ascene.querySelector('a-entity[camera]');
-			const cameraObj = camera.object3D;
-			cameraObj.position.set(0, 0, 0);
-			camera.setAttribute('camera', 'fov: 80; zoom: 1;');
-			camera.setAttribute('orbit-controls', `enabled: ${state.orbitControlsEnabled}; autoRotate: ${state.autoRotateEnabled}; target: 0 0 0; initialPosition: 0 0 0.75; minDistance: 0.2; enableDamping: true`);
+			iiiframe.utils.scaleAndPositionObject(object);
+			iiiframe.utils.createOrbitCamera(sceneEl, object);
+
+			sceneEl.setAttribute('renderer', `gammaOutput: ${!!!sceneEl.querySelector('a-image')}`);
+			sceneEl.resize();
 		}
 
 		document.addEventListener('DOMContentLoaded', (evt) => {
@@ -72,43 +96,8 @@
 			explorer.manifest = 'http://localhost:5000/collection/index.json';
 
 			explorer.addEventListener('onSelectManifest', (evt) => {
-
-				const manifest = evt.detail.id;
-				const scene = document.querySelector('#scene');
-				scene.innerHTML = '';
-
-				ascene = document.createElement('a-scene');
-				ascene.setAttribute('embedded', true);
-				ascene.setAttribute('renderer', 'gammaOutput: true');
-				scene.appendChild(ascene);
-
-				ascene.addEventListener('loaded', async (evt) => {
-
-					// iiiframe takes a manifest url and returns a set of a-frame entities
-					// add them to your scene and position the camera accordingly
-
-					const entities = await iiiframe(manifest);
-
-					entities.forEach((entity) => {
-						ascene.appendChild(entity);
-						
-						entity.addEventListener('model-loaded', (obj) => {
-							const object3D = obj.target.object3D;
-							iiiframe.utils.scaleAndPositionObject(object3D);
-						});
-
-						if (entity.nodeName === 'A-IMAGE') {
-							entity.addEventListener('loaded', (obj) => {
-								const object3D = obj.target.object3D;
-								iiiframe.utils.scaleAndPositionObject(object3D);
-							});
-						}
-
-					});
-
-					render();
-				});
-
+				manifest = evt.detail.id;
+				setup();
 			});
 
 		});

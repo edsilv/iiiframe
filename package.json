@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/edsilv/iiiframe#readme",
   "devDependencies": {
+    "@types/aframe": "^0.8.0",
     "@types/node": "10.3.2",
     "@types/three": "0.91.0",
     "biiif-cli": "^0.1.4",

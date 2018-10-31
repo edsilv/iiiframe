@@ -7,10 +7,11 @@
 		"declaration": true,
 		"declarationDir": "./dist",
 		"moduleResolution": "node",
-		"module": "commonjs",
+		"module": "es6",
 		"target": "es6",
         "noUnusedLocals": false,
         "types": [
+			"aframe",
             "manifesto.js",
             "node",
             "three"

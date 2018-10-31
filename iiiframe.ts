@@ -1,10 +1,13 @@
+
+type Entity = import('aframe').Entity;
+
 declare var iiiframe: any;
 
 interface options {
     ecsProposalEnabled: boolean;
 }
 
-window.iiiframe = async (manifesturl: string, opts?: options) => {
+window.iiiframe = async (manifesturl: string, opts?: options): Promise<Entity[]> => {
 
     let options: options =  {
         ecsProposalEnabled: false
@@ -14,16 +17,16 @@ window.iiiframe = async (manifesturl: string, opts?: options) => {
 
     const data = await manifesto.loadManifest(manifesturl);
     const manifest = manifesto.create(data);
-    const entities = await parseManifest(manifest);
+    const entities: Entity[] = await parseManifest(manifest);
 
     return entities;
 
-    async function parseManifest(manifest) {
+    async function parseManifest(manifest): Promise<Entity[]> {
 
         const sequences = manifest.getSequences();
         const sequence = sequences[0];
         const canvases = sequence.getCanvases();
-        const entities = [];
+        const entities: Entity[] = [];
         
         await Promise.all(canvases.map(async canvas => {
             const entity = await parseCanvas(canvas);
@@ -180,6 +183,59 @@ window.iiiframe.utils = {
         });
     },
 
+    appendEntities: (entities: Entity | Entity[], container: Entity): Promise<void> => {
+
+        return new Promise((resolve) => {
+
+            let entitiesLoaded: number = 0;
+
+            if (!Array.isArray(entities)) {
+                entities = [entities];
+            }
+
+            entities.forEach((entity) => {
+
+                entity.addEventListener('model-loaded', () => {
+                    entitiesLoaded++;
+                });
+
+                if (entity.nodeName === 'A-IMAGE') {
+                    entity.addEventListener('loaded', () => {
+                        entitiesLoaded++;
+                    });
+                }
+
+                container.appendChild(entity);
+            });
+
+            const loadAwaiter = setInterval(() => {
+                if (entitiesLoaded === (<Entity[]>entities).length) {
+                    clearInterval(loadAwaiter);
+                    resolve();
+                }
+            }, 100);
+
+        });
+    },
+
+    /**
+     * @param  {Element} sceneEl
+     * @param  {THREE.Object3D} object
+     * @param  {number} multiplier? - Multiply the magnitude of the object bounding vector by this number
+     * @returns Entity
+     */
+    createOrbitCamera: (sceneEl: Element, object: THREE.Object3D, multiplier?: number): Entity => {
+        const cameraEl: Entity = sceneEl.querySelector('a-entity[camera]');
+        const camera = cameraEl.object3D;
+        camera.position.set(0, 0, 0);
+        const multiplierDefault: number = 10;
+        const fov = iiiframe.utils.getFov(object, multiplier || multiplierDefault);
+        const cameraZ = iiiframe.utils.getCameraZ(object, multiplier || multiplierDefault);
+        cameraEl.setAttribute('camera', `fov: ${fov};`);
+        cameraEl.setAttribute('orbit-controls', `target: 0 0 0; initialPosition: 0 0 ${cameraZ}; enableDamping: true`);
+        return cameraEl;
+    },
+
     findGeometry: (children): THREE.Geometry | null => {
         const geometry = children[0].geometry;
         if (geometry) {
@@ -221,14 +277,14 @@ window.iiiframe.utils = {
         iiiframe.utils.getBoundingBox(obj).getSize(size).length();
         return size.length();
     },
-    
+
     /**
      * @param  {THREE.Object3D} obj
      * @param  {number} multiplier - Multiply the magnitude of the object bounding vector by this number
      * @returns number
      */
     getCameraZ: (obj: THREE.Object3D, multiplier: number): number => {
-        return iiiframe.utils.getBoundingMag() * multiplier;
+        return iiiframe.utils.getBoundingMag(obj) * multiplier;
     },
 
     /**

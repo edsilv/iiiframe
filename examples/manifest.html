@@ -1,30 +1,21 @@
 <head>
     <title>My A-Frame Scene</title>
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-orbit-controls@1.0.0/dist/aframe-orbit-controls.min.js"></script>
+	<script src="https://unpkg.com/aframe-orbit-controls@1.2.0/dist/aframe-orbit-controls.min.js"></script>
     <script src="https://unpkg.com/manifesto.js/dist/client/manifesto.bundle.js"></script>
-    <script src="https://unpkg.com/iiiframe"></script>
+    <script src="../dist/iiiframe.js"></script>
 </head>
 
 <body>
     <a-scene renderer="gammaOutput: true;"></a-scene>
     <script>
         document.addEventListener('DOMContentLoaded', async (evt) => {
-            const scene = document.querySelector('a-scene');
-            const entities = await iiiframe('https://edsilv.github.io/iiiframe/collection/gltf/fisherman/index.json');
-
-            entities.forEach((entity) => {
-                scene.appendChild(entity);
-
-                entity.addEventListener('model-loaded', (obj) => {
-                    const object3D = obj.target.object3D;
-                    iiiframe.utils.scaleAndPositionObject(object3D);
-                    camera = scene.querySelector('a-entity[camera]');
-                    const cameraObj = camera.object3D;
-                    cameraObj.position.set(0, 0, 0);
-                    camera.setAttribute('orbit-controls', 'target: 0 0 0; initialPosition: 0 0 0.75;');
-                });
-            });
+            const sceneEl = document.querySelector('a-scene');
+            const entities = await iiiframe('https://iiif-3d-manifests.netlify.com/collection/gltf/woody/index.json');
+            await iiiframe.utils.appendEntities(entities, sceneEl);
+            const object = entities[0].object3D;
+            iiiframe.utils.scaleAndPositionObject(object);
+            iiiframe.utils.createOrbitCamera(sceneEl, object);
         });
     </script>
 </body>
