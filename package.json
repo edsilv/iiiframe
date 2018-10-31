@@ -1,9 +1,12 @@
 {
   "name": "iiiframe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "IIIF Manifest -> A-Frame Entities",
-  "main": "iiiframe.js",
-  "types": "./iiiframe.d.ts",
+  "main": "./dist/iiiframe.js",
+  "types": "./dist/iiiframe.d.ts",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "build": "npx tsc && npx biiif collection -u http://localhost:5000/collection",
     "start": "npx serve"
