@@ -1,6 +1,6 @@
 {
   "name": "iiiframe",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "IIIF Manifest -> A-Frame Entities",
   "main": "iiiframe.js",
   "types": "./iiiframe.d.ts",
