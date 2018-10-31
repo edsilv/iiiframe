@@ -13,9 +13,8 @@
             const sceneEl = document.querySelector('a-scene');
             const entities = await iiiframe('https://iiif-3d-manifests.netlify.com/collection/gltf/woody/index.json');
             await iiiframe.utils.appendEntities(entities, sceneEl);
-            const object = entities[0].object3D;
-            iiiframe.utils.scaleAndPositionObject(object);
-            iiiframe.utils.createOrbitCamera(sceneEl, object);
+            iiiframe.utils.scaleAndPositionObject(entities[0]);
+            iiiframe.utils.createOrbitCamera(sceneEl, entities[0]);
         });
     </script>
 </body>

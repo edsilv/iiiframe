@@ -224,7 +224,8 @@ window.iiiframe.utils = {
      * @param  {number} multiplier? - Multiply the magnitude of the object bounding vector by this number
      * @returns Entity
      */
-    createOrbitCamera: (sceneEl: Element, object: THREE.Object3D, multiplier?: number): Entity => {
+    createOrbitCamera: (sceneEl: Element, object: Entity | THREE.Object3D, multiplier?: number): Entity => {
+        object = iiiframe.utils.coerceToObject3D(object);
         const cameraEl: Entity = sceneEl.querySelector('a-entity[camera]');
         const camera = cameraEl.object3D;
         camera.position.set(0, 0, 0);
@@ -246,7 +247,18 @@ window.iiiframe.utils = {
         return null;
     },
 
-    scaleAndPositionObject: (obj: THREE.Object3D): void => {
+    coerceToObject3D: (object: Entity | THREE.Object3D): THREE.Object3D => {
+
+        if ((<any>object).isEntity) {
+            object = (<Entity>object).object3D;
+        }
+
+        return <THREE.Object3D>object;
+    },
+
+    scaleAndPositionObject: (object: Entity | THREE.Object3D): void => {
+
+        const obj: THREE.Object3D = iiiframe.utils.coerceToObject3D(object);
         const geometry: THREE.Geometry | null = iiiframe.utils.findGeometry(obj.children);
 
         if (geometry) {
