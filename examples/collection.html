@@ -36,7 +36,7 @@
 
 	<script>
 
-		let manifest, sceneEl, object;
+		let manifest, sceneEl, debugTextEl, objectContainerEl, object;
 
 		let state = {
 			orbitControlsEnabled: true
@@ -57,9 +57,11 @@
 			sceneEl.setAttribute('embedded', true);
 			scene.appendChild(sceneEl);
 
-			const objectContainer = document.createElement('a-entity');
-			sceneEl.appendChild(objectContainer);
-			object = objectContainer.object3D;
+			debugTextEl = document.createElement('a-entity');
+
+			objectContainerEl = document.createElement('a-entity');
+			sceneEl.appendChild(objectContainerEl);
+			object = objectContainerEl.object3D;
 
 			sceneEl.addEventListener('loaded', async (evt) => {
 
@@ -69,7 +71,7 @@
 				const entities = await iiiframe(manifest);
 				let entitiesLoaded = 0;
 
-				await iiiframe.utils.appendEntities(entities, objectContainer);
+				await iiiframe.utils.appendEntities(entities, objectContainerEl);
 
 				render();
 			});
@@ -80,6 +82,19 @@
 			iiiframe.utils.createOrbitCamera(sceneEl, object);
 
 			sceneEl.setAttribute('renderer', `gammaOutput: ${!!!sceneEl.querySelector('a-image')}`);
+
+			sceneEl.addEventListener('enter-vr', function() {
+				var position = objectContainerEl.getAttribute('position');
+				position.y += 1.6;
+				objectContainerEl.setAttribute('position', position);
+			});
+
+			sceneEl.addEventListener('exit-vr', function() {
+				var position = objectContainerEl.getAttribute('position');
+				position.y = 0;
+				objectContainerEl.setAttribute('position', position);
+			});
+
 			sceneEl.resize();
 		}
 

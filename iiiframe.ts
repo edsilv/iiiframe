@@ -221,19 +221,20 @@ window.iiiframe.utils = {
     /**
      * @param  {Element} sceneEl
      * @param  {THREE.Object3D} object
-     * @param  {number} multiplier? - Multiply the magnitude of the object bounding vector by this number
+     * @param  {number} distanceMultiplier? - Multiply the magnitude of the object bounding vector by this number
      * @returns Entity
      */
-    createOrbitCamera: (sceneEl: Element, object: Entity | THREE.Object3D, multiplier?: number): Entity => {
+    createOrbitCamera: (sceneEl: Element, object: Entity | THREE.Object3D, distanceMultiplier?: number, zoomSpeed?: number): Entity => {
         object = iiiframe.utils.coerceToObject3D(object);
         const cameraEl: Entity = sceneEl.querySelector('a-entity[camera]');
         const camera = cameraEl.object3D;
         camera.position.set(0, 0, 0);
-        const multiplierDefault: number = 10;
-        const fov = iiiframe.utils.getFov(object, multiplier || multiplierDefault);
-        const cameraZ = iiiframe.utils.getCameraZ(object, multiplier || multiplierDefault);
+        const distanceMultiplierDefault: number = 10;
+        const defaultZoomSpeed: number = 2;
+        const fov = iiiframe.utils.getFov(object, distanceMultiplier || distanceMultiplierDefault);
+        const cameraZ = iiiframe.utils.getCameraZ(object, distanceMultiplier || distanceMultiplierDefault);
         cameraEl.setAttribute('camera', `fov: ${fov};`);
-        cameraEl.setAttribute('orbit-controls', `target: 0 0 0; initialPosition: 0 0 ${cameraZ}; enableDamping: true`);
+        cameraEl.setAttribute('orbit-controls', `target: 0 0 0; initialPosition: 0 0 ${cameraZ}; enableDamping: true; zoomSpeed: ${zoomSpeed || defaultZoomSpeed}`);
         return cameraEl;
     },
 
