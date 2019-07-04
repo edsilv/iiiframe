@@ -8,8 +8,8 @@
     "dist/"
   ],
   "scripts": {
-    "build": "npx tsc && npx biiif collection -u http://localhost:5000/collection",
-    "start": "npx serve"
+    "build": "tsc && biiif collection -u http://localhost:5000/collection && copyfiles ./dist/iiiframe.js examples/",
+    "start": "serve"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "@types/node": "10.3.2",
     "@types/three": "0.91.0",
     "biiif-cli": "^0.1.4",
+    "copyfiles": "^2.1.0",
     "manifesto.js": "^2.2.29",
     "serve": "^10.0.2",
     "typescript": "^2.9.2"
