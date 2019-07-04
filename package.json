@@ -8,7 +8,7 @@
     "dist/"
   ],
   "scripts": {
-    "build": "tsc && biiif collection -u https://iiiframe.netlify.com/collection && copyfiles ./dist/iiiframe.js examples/",
+    "build": "tsc && biiif collection -u https://iiiframe.netlify.com/collection",
     "start": "serve"
   },
   "repository": {
