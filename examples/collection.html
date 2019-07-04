@@ -92,8 +92,7 @@
 			});
 
 			const explorer = document.querySelector('iiif-explorer');
-			//explorer.manifest = 'https://edsilv.github.io/iiiframe/collection/';
-			explorer.manifest = 'http://localhost:5000/collection/index.json';
+			explorer.manifest = 'collection/index.json';
 
 			explorer.addEventListener('onSelectManifest', (evt) => {
 				manifest = evt.detail.id;
